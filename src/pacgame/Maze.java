@@ -8,7 +8,7 @@ public class Maze {
     public static final int nRows = 10;
     public static final int sqSize = 50;
     public static final int dotd = sqSize/3;
-    // what is in each square, row,col
+    // array for what is in each square, row,col
     static Square[][] grid;
     // a constructor that creates the grid for you.
     public Maze() {
@@ -21,7 +21,7 @@ public class Maze {
     // sure if you have an init function that needs to run, that you call it
     // from somewhere.
     public void init() {
-        // square types
+        // shorthand square types
         Square horizsq = new Square();
         horizsq.dot = false;
         horizsq.wall = WallType.HORIZONTAL;
@@ -169,14 +169,6 @@ public class Maze {
         grid[9][7] = horizsq;
         grid[9][8] = horizsq;
         grid[9][9] = BRCsq;
-        // assign pixelX and pixelY
-        // for (int row = 0; row < nRows; row++) {
-        //     for (int col = 0; col < nCols; col++) {
-        //         grid[row][col].pixelX = col*sqSize + sqSize/2;
-        //         grid[row][col].pixelY = row*sqSize + sqSize/2;
-                // System.out.println("row " + row + " col " + col + " X " + grid[row][col].pixelX + " Y " + grid[row][col].pixelY);
-            //     }
-            // }
     }
     // We need to define the Square class.  It's important that it's public
     // because we will probably need other classes to use it.
@@ -213,8 +205,12 @@ public class Maze {
             // Iterate over everything in your grid and draw each box
             // accordingly.  We nest two for loops because we are iterating
             // in two dimensions of our 2D grid array.
+            Graphics2D g2 = (Graphics2D) g;
+            g2.setStroke(new BasicStroke(3));
             int dotx;
             int doty;
+            int centX;
+            int centY;
             for (int row = 0; row < nRows; row++) {
                 for (int col = 0; col < nCols; col++) {
                     grid[row][col].pixelX = col*sqSize + sqSize/2;
@@ -232,47 +228,45 @@ public class Maze {
                     // If there's no dot, then there might be a wall.  We
                     // can use a switch statement to address each possible
                     // value.
-                    int startx = grid[row][col].pixelX;
-                    int starty = grid[row][col].pixelY;
+                    centX = grid[row][col].pixelX;
+                    centY = grid[row][col].pixelY;
                     g.setColor(Color.BLUE);
-                    Graphics2D g2 = (Graphics2D) g;
-                    g2.setStroke(new BasicStroke(3));
                     switch (grid[row][col].wall) {
                         case NONE:
                             break;
                         case HORIZONTAL:
-                            g2.draw(new Line2D.Float(startx-sqSize/2, starty, startx+sqSize/2, starty));
+                            g2.draw(new Line2D.Float(centX-sqSize/2, centY, centX+sqSize/2, centY));
                             break;
                         case HEL:
-                            g2.draw(new Line2D.Float(startx, starty, startx+sqSize/2, starty));
+                            g2.draw(new Line2D.Float(centX, centY, centX+sqSize/2, centY));
                             break;
                         case HER:
-                            g2.draw(new Line2D.Float(startx-sqSize/2, starty, startx, starty));
+                            g2.draw(new Line2D.Float(centX-sqSize/2, centY, centX, centY));
                             break;
                         case VERTICAL:
-                            g2.draw(new Line2D.Float(startx, starty-sqSize/2, startx, starty+sqSize/2));
+                            g2.draw(new Line2D.Float(centX, centY-sqSize/2, centX, centY+sqSize/2));
                             break;
                         case VET:
-                            g2.draw(new Line2D.Float(startx, starty, startx, starty+sqSize/2));
+                            g2.draw(new Line2D.Float(centX, centY, centX, centY+sqSize/2));
                             break;
                         case VEB:
-                            g2.draw(new Line2D.Float(startx, starty-sqSize/2, startx, starty));
+                            g2.draw(new Line2D.Float(centX, centY-sqSize/2, centX, centY));
                             break;
                         case TLC:
-                            g2.draw(new Line2D.Float(startx, starty, startx+sqSize/2, starty));
-                            g2.draw(new Line2D.Float(startx, starty, startx, starty+sqSize/2));
+                            g2.draw(new Line2D.Float(centX, centY, centX+sqSize/2, centY));
+                            g2.draw(new Line2D.Float(centX, centY, centX, centY+sqSize/2));
                             break;
                         case TRC:
-                            g2.draw(new Line2D.Float(startx, starty, startx-sqSize/2, starty));
-                            g2.draw(new Line2D.Float(startx, starty, startx, starty+sqSize/2));
+                            g2.draw(new Line2D.Float(centX, centY, centX-sqSize/2, centY));
+                            g2.draw(new Line2D.Float(centX, centY, centX, centY+sqSize/2));
                             break;
                         case BLC:
-                            g2.draw(new Line2D.Float(startx, starty, startx+sqSize/2, starty));
-                            g2.draw(new Line2D.Float(startx, starty, startx, starty-sqSize/2));
+                            g2.draw(new Line2D.Float(centX, centY, centX+sqSize/2, centY));
+                            g2.draw(new Line2D.Float(centX, centY, centX, centY-sqSize/2));
                             break;
                         case BRC:
-                            g2.draw(new Line2D.Float(startx, starty, startx-sqSize/2, starty));
-                            g2.draw(new Line2D.Float(startx, starty, startx, starty-sqSize/2));
+                            g2.draw(new Line2D.Float(centX, centY, centX-sqSize/2, centY));
+                            g2.draw(new Line2D.Float(centX, centY, centX, centY-sqSize/2));
                             break;
                     }
                 }
