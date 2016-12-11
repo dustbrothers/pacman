@@ -22,9 +22,6 @@ public class Maze {
     public static final int sqSize = 9;
     public static final int dotd = 3;
     public static final int dotoffset = 1;
-
-
-
     // The maze should have some concept of what is in each square, so store
     // that in here.  It will be a 2D array, or an array of arrays.  When
     // indexing, the number in the first (left) set of brackets will be the
@@ -190,10 +187,10 @@ public class Maze {
             for (int col = 0; col < nCols; col++) {
                 grid[row][col].pixelX = col*sqSize + sqSize/2;
                 grid[row][col].pixelY = row*sqSize + sqSize/2;
+                System.out.println("row " + row + " col " + col + " X " + grid[row][col].pixelX + " Y " + grid[row][col].pixelY);
                 }
             }
     }
-
     // We need to define the Square class.  It's important that it's public
     // because we will probably need other classes to use it.
     public class Square {
@@ -208,7 +205,6 @@ public class Maze {
         int pixelX;
         int pixelY;
     }
-
     // Define the WallType enum to contain all the possible values of wall.
     // The way I have it started, you will have to have no wall as one.
     // Then, when drawing, you can just check what type of wall it is,
@@ -221,7 +217,6 @@ public class Maze {
         // common that enum values are in all caps.
         NONE, HORIZONTAL, VERTICAL, TLC, TRC, BLC, BRC
     }
-
     // This is the DrawPanel analog we're using for this maze.  As you draw
     // things, you may find that you need more constants.  One such constant
     // will be box width.  Define these at the top where nRows and nCols are
@@ -231,6 +226,8 @@ public class Maze {
             // Iterate over everything in your grid and draw each box
             // accordingly.  We nest two for loops because we are iterating
             // in two dimensions of our 2D grid array.
+            int dotx;
+            int doty;
             for (int row = 0; row < nRows; row++) {
                 for (int col = 0; col < nCols; col++) {
                     // It may be nice to quickly compute the pixel
@@ -248,8 +245,10 @@ public class Maze {
                         // Draw a dot and continue.  Continue basically
                         // says you're done on this iteration of the loop
                         // so go to the next one
-                        int dotx = grid[row][col].pixelX-dotoffset;
-                        int doty = grid[row][col].pixelY-dotoffset;
+                        // grid[row][col].pixelX
+                        dotx = grid[row][col].pixelX-dotoffset;
+                        doty = grid[row][col].pixelY-dotoffset;
+                        System.out.println("DOT! row " + row + " col " + col + " pixelX "+ grid[row][col].pixelX + " dotx " + dotx + " doty " + doty + " dotd " + dotd + " dotoffset " + dotoffset);
                         g.setColor(Color.YELLOW);
                         g.fillOval(dotx, doty, dotd, dotd);
                         continue;
@@ -300,9 +299,7 @@ public class Maze {
         // http://codereview.stackexchange.com/questions/29630/simple-java-animation-with-swing
         JFrame frame = new JFrame("Pacman");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         MazePanel mazePanel = new MazePanel();
-
         frame.getContentPane().add(BorderLayout.CENTER, mazePanel);
         frame.setBackground(Color.BLACK);
         frame.setVisible(true);
@@ -310,7 +307,9 @@ public class Maze {
         // NOTE: These are magic numbers.  They should be constants set at the
         // top.  Alternatively, you can "setSize" based on how many rows and
         // columns you've drawn.
+        System.out.println("width " + sqSize*nCols + " height " + sqSize*nRows);
         frame.setSize(sqSize*nCols, sqSize*nRows);
         frame.setLocation(0, 0);
+
     }
 }
