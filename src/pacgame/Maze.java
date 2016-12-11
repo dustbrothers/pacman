@@ -4,39 +4,16 @@ import java.awt.*;
 import java.awt.geom.Line2D;
 
 public class Maze {
-    // Sometimes, you want to have constants, which are values that are always
-    // the same.  This allows you to avoid "magic numbers", which are any
-    // numbers written in code.  Ideally, you want everything to be in a
-    // variable, especially if it's used more than once.  This way, if you
-    // ever need to change them, you do it in one place and it takes effect
-    // everywhere.  Two relevant constants are dimensions of the grid/maze,
-    // which you will have to update.
-    // Here, we say "final" after "public static" to essentially tell the
-    // compiler that these values can't/won't be changed.
-    // Style note: when a constant or variable is the number of something,
-    // it is common to put the letter n at the front to denote "number".  You
-    // may also see "num", as in numCols.  If you like one better than the
-    // other, go ahead and use it.
     public static final int nCols = 10;
     public static final int nRows = 10;
-    public static final int sqSize = 9;
-    public static final int dotd = 3;
-    public static final int dotoffset = 1;
-    // The maze should have some concept of what is in each square, so store
-    // that in here.  It will be a 2D array, or an array of arrays.  When
-    // indexing, the number in the first (left) set of brackets will be the
-    // row and the number in the second (right) will be the column.  Note that
-    // this is backwards from what you'd nomally see in algebra.  Thus, the
-    // point (1, 5) would be at x=1 (column 1) and y=5 (row 5) and indexed
-    // as array2D[5][1].
+    public static final int sqSize = 50;
+    public static final int dotd = sqSize/3;
+    // what is in each square, row,col
     static Square[][] grid;
-
-    // You need a constructor that creates the grid for you.  You'll have to
-    // put correct values in for number of rows and columns.
+    // a constructor that creates the grid for you.
     public Maze() {
         grid = new Square[nRows][nCols];
     }
-
     // You should have some sort of function that initializes your Maze to
     // the correct values (wall, dots, etc.).  A function that initializes
     // everything is commonly called init.  This can also be done in your
@@ -44,10 +21,7 @@ public class Maze {
     // sure if you have an init function that needs to run, that you call it
     // from somewhere.
     public void init() {
-        // To do this, you'll have to iterate over grid (an example exists
-        // later in this file).  Here is an example for reference of how to
-        // set values in the array and Square class.
-        // instantiate square types
+        // square types
         Square horizsq = new Square();
         horizsq.dot = false;
         horizsq.wall = WallType.HORIZONTAL;
@@ -66,6 +40,18 @@ public class Maze {
         Square BRCsq = new Square();
         BRCsq.dot = false;
         BRCsq.wall = WallType.BRC;
+        Square VETsq = new Square();
+        VETsq.dot = false;
+        VETsq.wall = WallType.VET;
+        Square VEBsq = new Square();
+        VEBsq.dot = false;
+        VEBsq.wall = WallType.VEB;
+        Square HELsq = new Square();
+        HELsq.dot = false;
+        HELsq.wall = WallType.HEL;
+        Square HERsq = new Square();
+        HERsq.dot = false;
+        HERsq.wall = WallType.HER;
         Square dotsq = new Square();
         dotsq.dot = true;
         dotsq.wall = WallType.NONE;
@@ -98,24 +84,24 @@ public class Maze {
         grid[2][0] = vertsq;
         grid[2][1] = dotsq;
         grid[2][2] = TLCsq;
-        grid[2][3] = horizsq;
+        grid[2][3] = HERsq;
         grid[2][4] = dotsq;
-        grid[2][5] = horizsq;
+        grid[2][5] = HELsq;
         grid[2][6] = horizsq;
         grid[2][7] = TRCsq;
         grid[2][8] = dotsq;
         grid[2][9] = vertsq;
         // row 3
-        grid[3][0] = vertsq;
+        grid[3][0] = VEBsq;
         grid[3][1] = dotsq;
-        grid[3][2] = vertsq;
+        grid[3][2] = VEBsq;
         grid[3][3] = dotsq;
         grid[3][4] = dotsq;
         grid[3][5] = dotsq;
         grid[3][6] = dotsq;
-        grid[3][7] = vertsq;
+        grid[3][7] = VEBsq;
         grid[3][8] = dotsq;
-        grid[3][9] = vertsq;
+        grid[3][9] = VEBsq;
         // row 4
         grid[4][0] = empsq;
         grid[4][1] = dotsq;
@@ -130,12 +116,12 @@ public class Maze {
         // row 5
         grid[5][0] = TLCsq;
         grid[5][1] = horizsq;
-        grid[5][2] = horizsq;
+        grid[5][2] = HERsq;
         grid[5][3] = dotsq;
         grid[5][4] = BLCsq;
         grid[5][5] = BRCsq;
         grid[5][6] = dotsq;
-        grid[5][7] = horizsq;
+        grid[5][7] = HELsq;
         grid[5][8] = horizsq;
         grid[5][9] = TRCsq;
         // row 6
@@ -152,12 +138,12 @@ public class Maze {
         // row 7
         grid[7][0] = vertsq;
         grid[7][1] = dotsq;
-        grid[7][2] = horizsq;
+        grid[7][2] = HELsq;
         grid[7][3] = horizsq;
-        grid[7][4] = horizsq;
+        grid[7][4] = HERsq;
         grid[7][5] = dotsq;
-        grid[7][6] = horizsq;
-        grid[7][7] = horizsq;
+        grid[7][6] = HELsq;
+        grid[7][7] = HERsq;
         grid[7][8] = dotsq;
         grid[7][9] = vertsq;
         // row 8
@@ -183,13 +169,13 @@ public class Maze {
         grid[9][8] = horizsq;
         grid[9][9] = BRCsq;
         // assign pixelX and pixelY
-        for (int row = 0; row < nRows; row++) {
-            for (int col = 0; col < nCols; col++) {
-                grid[row][col].pixelX = col*sqSize + sqSize/2;
-                grid[row][col].pixelY = row*sqSize + sqSize/2;
-                System.out.println("row " + row + " col " + col + " X " + grid[row][col].pixelX + " Y " + grid[row][col].pixelY);
-                }
-            }
+        // for (int row = 0; row < nRows; row++) {
+        //     for (int col = 0; col < nCols; col++) {
+        //         grid[row][col].pixelX = col*sqSize + sqSize/2;
+        //         grid[row][col].pixelY = row*sqSize + sqSize/2;
+                // System.out.println("row " + row + " col " + col + " X " + grid[row][col].pixelX + " Y " + grid[row][col].pixelY);
+            //     }
+            // }
     }
     // We need to define the Square class.  It's important that it's public
     // because we will probably need other classes to use it.
@@ -215,7 +201,7 @@ public class Maze {
     public enum WallType {
         // Add more values by separating by commas, as I did here.  It is
         // common that enum values are in all caps.
-        NONE, HORIZONTAL, VERTICAL, TLC, TRC, BLC, BRC
+        NONE, HORIZONTAL, VERTICAL, TLC, TRC, BLC, BRC, VET, VEB, HEL, HER
     }
     // This is the DrawPanel analog we're using for this maze.  As you draw
     // things, you may find that you need more constants.  One such constant
@@ -230,25 +216,22 @@ public class Maze {
             int doty;
             for (int row = 0; row < nRows; row++) {
                 for (int col = 0; col < nCols; col++) {
+                    grid[row][col].pixelX = col*sqSize + sqSize/2;
+                    grid[row][col].pixelY = row*sqSize + sqSize/2;
+                    // System.out.println("row " + row + " col " + col + " X " + grid[row][col].pixelX + " Y " + grid[row][col].pixelY);
                     // It may be nice to quickly compute the pixel
                     // coordinates of the center of this square right
                     // here for reference later in the loop.  It will likely
                     // require some simple math to figure out.
-                    // int pixelX = col*sqSize + sqSize/2;
-                    // System.out.println("pixelX: " + pixelX);
-                    // int pixelY = row*sqSize + sqSize/2;
-                    // System.out.println("pixelY: " + pixelY);
-
                     // Here is where you can take care of each possible
                     // value of a grid
                     if (grid[row][col].dot) {
                         // Draw a dot and continue.  Continue basically
                         // says you're done on this iteration of the loop
                         // so go to the next one
-                        // grid[row][col].pixelX
-                        dotx = grid[row][col].pixelX-dotoffset;
-                        doty = grid[row][col].pixelY-dotoffset;
-                        System.out.println("DOT! row " + row + " col " + col + " pixelX "+ grid[row][col].pixelX + " dotx " + dotx + " doty " + doty + " dotd " + dotd + " dotoffset " + dotoffset);
+                        dotx = grid[row][col].pixelX-dotd/2;
+                        doty = grid[row][col].pixelY-dotd/2;
+                        // System.out.println("DOT! row " + row + " col " + col + " pixelX "+ grid[row][col].pixelX + " dotx " + dotx + " doty " + doty + " dotd " + dotd);
                         g.setColor(Color.YELLOW);
                         g.fillOval(dotx, doty, dotd, dotd);
                         continue;
@@ -265,26 +248,38 @@ public class Maze {
                         case NONE:
                             break;
                         case HORIZONTAL:
-                            g2.draw(new Line2D.Float(startx-sqSize/2, starty, startx+sqSize, starty));
+                            g2.draw(new Line2D.Float(startx-sqSize/2, starty, startx+sqSize/2, starty));
+                            break;
+                        case HEL:
+                            g2.draw(new Line2D.Float(startx, starty, startx+sqSize/2, starty));
+                            break;
+                        case HER:
+                            g2.draw(new Line2D.Float(startx-sqSize/2, starty, startx, starty));
                             break;
                         case VERTICAL:
-                            g2.draw(new Line2D.Float(startx, starty-sqSize/2, startx, starty+sqSize));
+                            g2.draw(new Line2D.Float(startx, starty-sqSize/2, startx, starty+sqSize/2));
+                            break;
+                        case VET:
+                            g2.draw(new Line2D.Float(startx, starty, startx, starty+sqSize/2));
+                            break;
+                        case VEB:
+                            g2.draw(new Line2D.Float(startx, starty-sqSize/2, startx, starty));
                             break;
                         case TLC:
-                            g2.draw(new Line2D.Float(startx, starty, startx+(sqSize/2), starty));
-                            g2.draw(new Line2D.Float(startx, starty, startx, starty+(sqSize/2)));
+                            g2.draw(new Line2D.Float(startx, starty, startx+sqSize/2, starty));
+                            g2.draw(new Line2D.Float(startx, starty, startx, starty+sqSize/2));
                             break;
                         case TRC:
-                            g2.draw(new Line2D.Float(startx, starty, startx-(sqSize/2), starty));
-                            g2.draw(new Line2D.Float(startx, starty, startx, starty+(sqSize/2)));
+                            g2.draw(new Line2D.Float(startx, starty, startx-sqSize/2, starty));
+                            g2.draw(new Line2D.Float(startx, starty, startx, starty+sqSize/2));
                             break;
                         case BLC:
-                            g2.draw(new Line2D.Float(startx, starty, startx+(sqSize/2), starty));
-                            g2.draw(new Line2D.Float(startx, starty, startx, starty-(sqSize/2)));
+                            g2.draw(new Line2D.Float(startx, starty, startx+sqSize/2, starty));
+                            g2.draw(new Line2D.Float(startx, starty, startx, starty-sqSize/2));
                             break;
                         case BRC:
-                            g2.draw(new Line2D.Float(startx, starty, startx-(sqSize/2), starty));
-                            g2.draw(new Line2D.Float(startx, starty, startx, starty-(sqSize/2)));
+                            g2.draw(new Line2D.Float(startx, starty, startx-sqSize/2, starty));
+                            g2.draw(new Line2D.Float(startx, starty, startx, starty-sqSize/2));
                             break;
                     }
                 }
@@ -308,7 +303,7 @@ public class Maze {
         // top.  Alternatively, you can "setSize" based on how many rows and
         // columns you've drawn.
         System.out.println("width " + sqSize*nCols + " height " + sqSize*nRows);
-        frame.setSize(sqSize*nCols, sqSize*nRows);
+        frame.setSize(sqSize*nCols, sqSize*nRows+sqSize/2);
         frame.setLocation(0, 0);
 
     }
