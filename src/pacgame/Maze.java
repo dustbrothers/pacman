@@ -58,6 +58,7 @@ public class Maze {
         Square empsq = new Square();
         empsq.dot = false;
         empsq.wall = WallType.NONE;
+        // create the maze
         // row 0
         grid[0][0] = TLCsq;
         grid[0][1] = horizsq;
@@ -218,20 +219,12 @@ public class Maze {
                 for (int col = 0; col < nCols; col++) {
                     grid[row][col].pixelX = col*sqSize + sqSize/2;
                     grid[row][col].pixelY = row*sqSize + sqSize/2;
-                    // System.out.println("row " + row + " col " + col + " X " + grid[row][col].pixelX + " Y " + grid[row][col].pixelY);
-                    // It may be nice to quickly compute the pixel
-                    // coordinates of the center of this square right
-                    // here for reference later in the loop.  It will likely
-                    // require some simple math to figure out.
-                    // Here is where you can take care of each possible
-                    // value of a grid
                     if (grid[row][col].dot) {
                         // Draw a dot and continue.  Continue basically
                         // says you're done on this iteration of the loop
                         // so go to the next one
                         dotx = grid[row][col].pixelX-dotd/2;
                         doty = grid[row][col].pixelY-dotd/2;
-                        // System.out.println("DOT! row " + row + " col " + col + " pixelX "+ grid[row][col].pixelX + " dotx " + dotx + " doty " + doty + " dotd " + dotd);
                         g.setColor(Color.YELLOW);
                         g.fillOval(dotx, doty, dotd, dotd);
                         continue;
@@ -286,7 +279,6 @@ public class Maze {
             }
         }
     }
-
     // Define a function to draw your maze.  This function will have something
     // that extends JPanel
     public static void draw() {
@@ -299,12 +291,8 @@ public class Maze {
         frame.setBackground(Color.BLACK);
         frame.setVisible(true);
         frame.setResizable(false);
-        // NOTE: These are magic numbers.  They should be constants set at the
-        // top.  Alternatively, you can "setSize" based on how many rows and
-        // columns you've drawn.
-        System.out.println("width " + sqSize*nCols + " height " + sqSize*nRows);
+        // DONT KNOW WHY I HAD TO ADD TO HEIGHT????
         frame.setSize(sqSize*nCols, sqSize*nRows+sqSize/2);
         frame.setLocation(0, 0);
-
     }
 }
