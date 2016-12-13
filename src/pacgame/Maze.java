@@ -2,12 +2,15 @@ package pacgame;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Line2D;
+import java.awt.geom.Arc2D;
+import java.util.Arrays;
 
 public class Maze {
-    public static final int nCols = 10;
-    public static final int nRows = 10;
-    public static final int sqSize = 50;
-    public static final int dotd = sqSize/3;
+    public static final int nCols = 14;         // number of columns
+    public static final int nRows = 13;         // number of rows
+    public static final int sqSize = 40;        // grid square size
+    public static final int dotd = sqSize/4;    // dot diameter
+    public static final int WT = 3;             // wall thickness
     // array for what is in each square, row,col
     static Square[][] grid;
     // a constructor that creates the grid for you.
@@ -22,153 +25,238 @@ public class Maze {
     // from somewhere.
     public void init() {
         // shorthand square types
+        // single horizontal line
         Square horizsq = new Square();
-        horizsq.dot = false;
-        horizsq.wall = WallType.HORIZONTAL;
+        horizsq.wall = WallType.HORIZ;
+        // single vertical line
         Square vertsq = new Square();
-        vertsq.dot = false;
-        vertsq.wall = WallType.VERTICAL;
+        vertsq.wall = WallType.VERT;
+        // single top left corner
         Square TLCsq = new Square();
-        TLCsq.dot = false;
         TLCsq.wall = WallType.TLC;
+        // single top right corner
         Square TRCsq = new Square();
-        TRCsq.dot = false;
         TRCsq.wall = WallType.TRC;
+        // single bottom left corner
         Square BLCsq = new Square();
-        BLCsq.dot = false;
         BLCsq.wall = WallType.BLC;
+        // single bottom right corner
         Square BRCsq = new Square();
-        BRCsq.dot = false;
         BRCsq.wall = WallType.BRC;
-        Square VETsq = new Square();
-        VETsq.dot = false;
-        VETsq.wall = WallType.VET;
-        Square VEBsq = new Square();
-        VEBsq.dot = false;
-        VEBsq.wall = WallType.VEB;
-        Square HELsq = new Square();
-        HELsq.dot = false;
-        HELsq.wall = WallType.HEL;
-        Square HERsq = new Square();
-        HERsq.dot = false;
-        HERsq.wall = WallType.HER;
-        Square dotsq = new Square();
-        dotsq.dot = true;
-        dotsq.wall = WallType.NONE;
-        Square empsq = new Square();
-        empsq.dot = false;
-        empsq.wall = WallType.NONE;
+        // double top aligned
+        Square Tsq = new Square();
+        Tsq.wall = WallType.T;
+        // dbl bottom aligned
+        Square Bsq = new Square();
+        Bsq.wall = WallType.B;
+        // dbl left aligned
+        Square Lsq = new Square();
+        Lsq.wall = WallType.L;
+        // dbl right aligned
+        Square Rsq = new Square();
+        Rsq.wall = WallType.R;
+        // dbl top aligned T intersect left
+        Square TTLsq = new Square();
+        TTLsq.wall = WallType.TTL;
+        // dbl top aligned T intersect right
+        Square TTRsq = new Square();
+        TTRsq.wall = WallType.TTR;
+        // dbl left aligned T intersect top
+        Square LTTsq = new Square();
+        LTTsq.wall = WallType.LTT;
+        // dbl left aligned T intersect bottom
+        Square LTBsq = new Square();
+        LTBsq.wall = WallType.LTB;
+        // dbl right aligned T intersect top
+        Square RTTsq = new Square();
+        RTTsq.wall = WallType.RTT;
+        // dbl right aligned T intersect bottom
+        Square RTBsq = new Square();
+        RTBsq.wall = WallType.RTB;
+        // dbl top aligned right corner down
+        Square TRCDsq = new Square();
+        TRCDsq.wall = WallType.TRCD;
+        // dbl top aligned right corner up
+        Square TRCUsq = new Square();
+        TRCUsq.wall = WallType.TRCU;
+        // dbl top aligned left corner down
+        Square TLCDsq = new Square();
+        TLCDsq.wall = WallType.TLCD;
+        // dbl top aligned left corner up
+        Square TLCUsq = new Square();
+        TLCUsq.wall = WallType.TLCU;
+        // dbl bottom aligned right corner up
+        Square BRCUsq = new Square();
+        BRCUsq.wall = WallType.BRCU;
+        // dbl bottom aligned right corner down
+        Square BRCDsq = new Square();
+        BRCDsq.wall = WallType.BRCD;
+        // dbl bottom aligned left corner up
+        Square BLCUsq = new Square();
+        BLCUsq.wall = WallType.BLCU;
+        // dbl bottom aligned left corner down
+        Square BLCDsq = new Square();
+        BLCDsq.wall = WallType.BLCD;
+        // door
+        Square DOORsq = new Square();
+        DOORsq.wall = WallType.DOOR;
+        // inner top left corner
+        Square ITLCsq = new Square();
+        ITLCsq.wall = WallType.ITLC;
+        // inner top right corner
+        Square ITRCsq = new Square();
+        ITRCsq.wall = WallType.ITRC;
+        // inner bottom left corner
+        Square IBLCsq = new Square();
+        IBLCsq.wall = WallType.IBLC;
+        // inner bottom right corner
+        Square IBRCsq = new Square();
+        IBRCsq.wall = WallType.IBRC;
+        // powerup
+        Square POWERUPsq = new Square();
+        POWERUPsq.powerup = true;
+        POWERUPsq.wall = WallType.NONE;
+        // dot
+        Square DOTsq = new Square();
+        DOTsq.dot = true;
+        DOTsq.wall = WallType.NONE;
+        // empty
+        Square EMPTYsq = new Square();
+        EMPTYsq.wall = WallType.NONE;
         // create the maze
         // row 0
-        grid[0][0] = TLCsq;
-        grid[0][1] = horizsq;
-        grid[0][2] = horizsq;
-        grid[0][3] = horizsq;
-        grid[0][4] = horizsq;
-        grid[0][5] = horizsq;
-        grid[0][6] = horizsq;
-        grid[0][7] = horizsq;
-        grid[0][8] = horizsq;
-        grid[0][9] = TRCsq;
+        Arrays.fill(grid[0], EMPTYsq);
         // row 1
-        grid[1][0] = vertsq;
-        grid[1][1] = dotsq;
-        grid[1][2] = dotsq;
-        grid[1][3] = dotsq;
-        grid[1][4] = dotsq;
-        grid[1][5] = dotsq;
-        grid[1][6] = dotsq;
-        grid[1][7] = dotsq;
-        grid[1][8] = dotsq;
-        grid[1][9] = vertsq;
+        Arrays.fill(grid[1], EMPTYsq);
         // row 2
-        grid[2][0] = vertsq;
-        grid[2][1] = dotsq;
-        grid[2][2] = TLCsq;
-        grid[2][3] = HERsq;
-        grid[2][4] = dotsq;
-        grid[2][5] = HELsq;
-        grid[2][6] = horizsq;
-        grid[2][7] = TRCsq;
-        grid[2][8] = dotsq;
-        grid[2][9] = vertsq;
+        Arrays.fill(grid[2], EMPTYsq);
         // row 3
-        grid[3][0] = VEBsq;
-        grid[3][1] = dotsq;
-        grid[3][2] = VEBsq;
-        grid[3][3] = dotsq;
-        grid[3][4] = dotsq;
-        grid[3][5] = dotsq;
-        grid[3][6] = dotsq;
-        grid[3][7] = VEBsq;
-        grid[3][8] = dotsq;
-        grid[3][9] = VEBsq;
+        grid[3][0] = TLCDsq;
+        for (int i = 1; i < 13; i++){
+            grid[3][i] = Tsq;
+        }
+        grid[3][13] = TTLsq;
+        // grid[3][14] = TTRsq;
+        // for (int i = 15; i < 27; i++){
+        //     grid[3][i] = Tsq;
+        // }
+        // grid[3][27] = TRCDsq;
         // row 4
-        grid[4][0] = empsq;
-        grid[4][1] = dotsq;
-        grid[4][2] = dotsq;
-        grid[4][3] = dotsq;
-        grid[4][4] = TLCsq;
-        grid[4][5] = TRCsq;
-        grid[4][6] = dotsq;
-        grid[4][7] = dotsq;
-        grid[4][8] = dotsq;
-        grid[4][9] = empsq;
+        grid[4][0] = Lsq;
+        for (int i = 1; i < 13; i++){
+            grid[4][i] = DOTsq;
+        }
+        grid[4][13] = vertsq;
         // row 5
-        grid[5][0] = TLCsq;
-        grid[5][1] = horizsq;
-        grid[5][2] = HERsq;
-        grid[5][3] = dotsq;
-        grid[5][4] = BLCsq;
-        grid[5][5] = BRCsq;
-        grid[5][6] = dotsq;
-        grid[5][7] = HELsq;
+        grid[5][0] = Lsq;
+        grid[5][1] = DOTsq;
+        grid[5][2] = TLCsq;
+        grid[5][3] = horizsq;
+        grid[5][4] = horizsq;
+        grid[5][5] = TRCsq;
+        grid[5][6] = DOTsq;
+        grid[5][7] = TLCsq;
         grid[5][8] = horizsq;
-        grid[5][9] = TRCsq;
+        grid[5][9] = horizsq;
+        grid[5][10] = horizsq;
+        grid[5][11] = TRCsq;
+        grid[5][12] = DOTsq;
+        grid[5][13] = vertsq;
         // row 6
-        grid[6][0] = vertsq;
-        grid[6][1] = dotsq;
-        grid[6][2] = dotsq;
-        grid[6][3] = dotsq;
-        grid[6][4] = dotsq;
-        grid[6][5] = dotsq;
-        grid[6][6] = dotsq;
-        grid[6][7] = dotsq;
-        grid[6][8] = dotsq;
-        grid[6][9] = vertsq;
+        grid[6][0] = Lsq;
+        grid[6][1] = POWERUPsq;
+        grid[6][2] = vertsq;
+        grid[6][3] = EMPTYsq;
+        grid[6][4] = EMPTYsq;
+        grid[6][5] = vertsq;
+        grid[6][6] = DOTsq;
+        grid[6][7] = vertsq;
+        grid[6][8] = EMPTYsq;
+        grid[6][9] = EMPTYsq;
+        grid[6][10] = EMPTYsq;
+        grid[6][11] = vertsq;
+        grid[6][12] = DOTsq;
+        grid[6][13] = vertsq;
         // row 7
-        grid[7][0] = vertsq;
-        grid[7][1] = dotsq;
-        grid[7][2] = HELsq;
+        grid[7][0] = Lsq;
+        grid[7][1] = DOTsq;
+        grid[7][2] = BLCsq;
         grid[7][3] = horizsq;
-        grid[7][4] = HERsq;
-        grid[7][5] = dotsq;
-        grid[7][6] = HELsq;
-        grid[7][7] = HERsq;
-        grid[7][8] = dotsq;
-        grid[7][9] = vertsq;
+        grid[7][4] = horizsq;
+        grid[7][5] = BRCsq;
+        grid[7][6] = DOTsq;
+        grid[7][7] = BLCsq;
+        grid[7][8] = horizsq;
+        grid[7][9] = horizsq;
+        grid[7][10] = horizsq;
+        grid[7][11] = BRCsq;
+        grid[7][12] = DOTsq;
+        grid[7][13] = BLCsq;
         // row 8
-        grid[8][0] = vertsq;
-        grid[8][1] = dotsq;
-        grid[8][2] = dotsq;
-        grid[8][3] = dotsq;
-        grid[8][4] = dotsq;
-        grid[8][5] = dotsq;
-        grid[8][6] = dotsq;
-        grid[8][7] = dotsq;
-        grid[8][8] = dotsq;
-        grid[8][9] = vertsq;
+        grid[8][0] = Lsq;
+        for (int i = 1; i < 14; i++){
+            grid[8][i] = DOTsq;
+        }
         // row 9
-        grid[9][0] = BLCsq;
-        grid[9][1] = horizsq;
-        grid[9][2] = horizsq;
+        grid[9][0] = Lsq;
+        grid[9][1] = DOTsq;
+        grid[9][2] = TLCsq;
         grid[9][3] = horizsq;
         grid[9][4] = horizsq;
-        grid[9][5] = horizsq;
-        grid[9][6] = horizsq;
-        grid[9][7] = horizsq;
-        grid[9][8] = horizsq;
-        grid[9][9] = BRCsq;
+        grid[9][5] = TRCsq;
+        grid[9][6] = DOTsq;
+        grid[9][7] = TLCsq;
+        grid[9][8] = TRCsq;
+        grid[9][9] = DOTsq;
+        grid[9][10] = TLCsq;
+        grid[9][11] = horizsq;
+        grid[9][12] = horizsq;
+        grid[9][13] = horizsq;
+        // row 10
+        grid[10][0] = Lsq;
+        grid[10][1] = DOTsq;
+        grid[10][2] = BLCsq;
+        grid[10][3] = horizsq;
+        grid[10][4] = horizsq;
+        grid[10][5] = BRCsq;
+        grid[10][6] = DOTsq;
+        grid[10][7] = vertsq;
+        grid[10][8] = vertsq;
+        grid[10][9] = DOTsq;
+        grid[10][10] = BLCsq;
+        grid[10][11] = horizsq;
+        grid[10][12] = horizsq;
+        grid[10][13] = TRCsq;
+        // row 11
+        grid[11][0] = Lsq;
+        grid[11][1] = DOTsq;
+        grid[11][2] = DOTsq;
+        grid[11][3] = DOTsq;
+        grid[11][4] = DOTsq;
+        grid[11][5] = DOTsq;
+        grid[11][6] = DOTsq;
+        grid[11][7] = vertsq;
+        grid[11][8] = vertsq;
+        grid[11][9] = DOTsq;
+        grid[11][10] = DOTsq;
+        grid[11][11] = DOTsq;
+        grid[11][12] = DOTsq;
+        grid[11][13] = vertsq;
+        // row 12
+        grid[12][0] = BLCUsq;
+        grid[12][1] = Bsq;
+        grid[12][2] = Bsq;
+        grid[12][3] = Bsq;
+        grid[12][4] = Bsq;
+        grid[12][5] = BRCDsq;
+        grid[12][6] = DOTsq;
+        grid[12][7] = vertsq;
+        grid[12][8] = BLCsq;
+        grid[12][9] = horizsq;
+        grid[12][10] = horizsq;
+        grid[12][11] = TRCsq;
+        grid[12][12] = EMPTYsq;
+        grid[12][13] = vertsq;
     }
     // We need to define the Square class.  It's important that it's public
     // because we will probably need other classes to use it.
@@ -179,7 +267,9 @@ public class Maze {
         // Square to draw a wall, then it'll also be useful to have something
         // that knows what kind of wall.  For this, we will use an enum, which
         // just allows us to refer to things by specific names.
-        Boolean dot;
+        // small b boolean defaults to false
+        boolean dot;
+        boolean powerup;
         WallType wall;
         int pixelX;
         int pixelY;
@@ -194,7 +284,10 @@ public class Maze {
     public enum WallType {
         // Add more values by separating by commas, as I did here.  It is
         // common that enum values are in all caps.
-        NONE, HORIZONTAL, VERTICAL, TLC, TRC, BLC, BRC, VET, VEB, HEL, HER
+        NONE, HORIZ, VERT, TLC, TRC, BLC, BRC,
+        T, TTL, TTR, L, LTT, LTB, R, RTT, RTB, B,
+        TRCD, TRCU, TLCD, TLCU, BRCU, BRCD, BLCU, BLCD,
+        DOOR, ITLC, ITRC, IBLC, IBRC
     }
     // This is the DrawPanel analog we're using for this maze.  As you draw
     // things, you may find that you need more constants.  One such constant
@@ -215,15 +308,22 @@ public class Maze {
                 for (int col = 0; col < nCols; col++) {
                     grid[row][col].pixelX = col*sqSize + sqSize/2;
                     grid[row][col].pixelY = row*sqSize + sqSize/2;
-                    if (grid[row][col].dot) {
-                        // Draw a dot and continue.  Continue basically
-                        // says you're done on this iteration of the loop
-                        // so go to the next one
-                        dotx = grid[row][col].pixelX-dotd/2;
-                        doty = grid[row][col].pixelY-dotd/2;
-                        g.setColor(Color.YELLOW);
-                        g.fillOval(dotx, doty, dotd, dotd);
-                        continue;
+                    if (grid[row][col].dot || grid[row][col].powerup) {
+                        g.setColor(Color.PINK);
+                        if (grid[row][col].dot) {
+                            // Draw a dot and continue.  Continue basically
+                            // says you're done on this iteration of the loop
+                            // so go to the next one
+                            dotx = grid[row][col].pixelX-dotd/2;
+                            doty = grid[row][col].pixelY-dotd/2;
+                            g.fillOval(dotx, doty, dotd, dotd);
+                            continue;
+                        } else if (grid[row][col].powerup) {
+                            dotx = grid[row][col].pixelX-sqSize/2;
+                            doty = grid[row][col].pixelY-sqSize/2;
+                            g.fillOval(dotx, doty, sqSize, sqSize);
+                            continue;
+                        }
                     }
                     // If there's no dot, then there might be a wall.  We
                     // can use a switch statement to address each possible
@@ -234,40 +334,64 @@ public class Maze {
                     switch (grid[row][col].wall) {
                         case NONE:
                             break;
-                        case HORIZONTAL:
+                        case HORIZ:
                             g2.draw(new Line2D.Float(centX-sqSize/2, centY, centX+sqSize/2, centY));
                             break;
-                        case HEL:
-                            g2.draw(new Line2D.Float(centX, centY, centX+sqSize/2, centY));
-                            break;
-                        case HER:
-                            g2.draw(new Line2D.Float(centX-sqSize/2, centY, centX, centY));
-                            break;
-                        case VERTICAL:
+                        case VERT:
                             g2.draw(new Line2D.Float(centX, centY-sqSize/2, centX, centY+sqSize/2));
                             break;
-                        case VET:
-                            g2.draw(new Line2D.Float(centX, centY, centX, centY+sqSize/2));
+                        case T:
+                            g2.draw(new Line2D.Float(centX-sqSize/2, centY-sqSize/2+WT, centX+sqSize/2, centY-sqSize/2+WT));
+                            g2.draw(new Line2D.Float(centX-sqSize/2, centY, centX+sqSize/2, centY));
                             break;
-                        case VEB:
-                            g2.draw(new Line2D.Float(centX, centY-sqSize/2, centX, centY));
+                        case B:
+                            g2.draw(new Line2D.Float(centX-sqSize/2, centY+sqSize/2-WT, centX+sqSize/2, centY+sqSize/2-WT));
+                            g2.draw(new Line2D.Float(centX-sqSize/2, centY, centX+sqSize/2, centY));
+                            break;
+                        case L:
+                            g2.draw(new Line2D.Float(centX-sqSize/2+WT, centY-sqSize/2, centX-sqSize/2+WT, centY+sqSize/2));
+                            g2.draw(new Line2D.Float(centX, centY-sqSize/2, centX, centY+sqSize/2));
+                            break;
+                        case R:
+                            g2.draw(new Line2D.Float(centX+sqSize/2-WT, centY-sqSize/2, centX+sqSize/2-WT, centY+sqSize/2));
+                            g2.draw(new Line2D.Float(centX, centY-sqSize/2, centX, centY+sqSize/2));
                             break;
                         case TLC:
-                            g2.draw(new Line2D.Float(centX, centY, centX+sqSize/2, centY));
-                            g2.draw(new Line2D.Float(centX, centY, centX, centY+sqSize/2));
+                            g2.draw(new Arc2D.Float(centX, centY, sqSize, sqSize, 90, 90, Arc2D.OPEN));
                             break;
                         case TRC:
-                            g2.draw(new Line2D.Float(centX, centY, centX-sqSize/2, centY));
-                            g2.draw(new Line2D.Float(centX, centY, centX, centY+sqSize/2));
+                            g2.draw(new Arc2D.Float(centX-sqSize, centY, sqSize, sqSize, 0, 90, Arc2D.OPEN));
                             break;
                         case BLC:
-                            g2.draw(new Line2D.Float(centX, centY, centX+sqSize/2, centY));
-                            g2.draw(new Line2D.Float(centX, centY, centX, centY-sqSize/2));
+                            g2.draw(new Arc2D.Float(centX, centY-sqSize, sqSize, sqSize, 180, 90, Arc2D.OPEN));
                             break;
                         case BRC:
-                            g2.draw(new Line2D.Float(centX, centY, centX-sqSize/2, centY));
-                            g2.draw(new Line2D.Float(centX, centY, centX, centY-sqSize/2));
+                            g2.draw(new Arc2D.Float(centX-sqSize, centY-sqSize, sqSize, sqSize, 270, 90, Arc2D.OPEN));
                             break;
+                        case TLCD:
+                            g2.draw(new Arc2D.Float(centX, centY, sqSize, sqSize, 90, 90, Arc2D.OPEN));
+                            g2.draw(new Arc2D.Float(centX-sqSize/2+WT, centY-sqSize/2+WT, 2*sqSize-2*WT, 2*sqSize-2*WT, 90, 90, Arc2D.OPEN));
+                            break;
+                        // case TRCD:
+                        //     g2.draw(new Arc2D.Float(centX-sqSize, centY, sqSize, sqSize, 0, 90, Arc2D.OPEN));
+                        //     g2.draw(new Arc2D.Float(centX-sqSize+WT, centY-sqSize/2+WT, 2*sqSize-2*WT, 2*sqSize-2*WT, 0, 90, Arc2D.OPEN));
+                        //     break;
+                        case BLCU:
+                            g2.draw(new Arc2D.Float(centX, centY-sqSize, sqSize, sqSize, 180, 90, Arc2D.OPEN));
+                            g2.draw(new Arc2D.Float(centX-sqSize/2+WT, centY-3*sqSize/2+WT, 2*sqSize-2*WT, 2*sqSize-2*WT, 180, 90, Arc2D.OPEN));
+                            break;
+                        case TTL:
+                            g2.draw(new Arc2D.Float(centX-sqSize, centY, sqSize, sqSize, 0, 90, Arc2D.OPEN));
+                            g2.draw(new Line2D.Float(centX-sqSize/2, centY-sqSize/2+WT, centX+sqSize/2, centY-sqSize/2+WT));
+                            break;
+                        // case TTR:
+                        //     g2.draw(new Arc2D.Float(centX, centY, sqSize, sqSize, 90, 90, Arc2D.OPEN));
+                        //     g2.draw(new Line2D.Float(centX-sqSize/2, centY-sqSize/2+WT, centX+sqSize/2, centY-sqSize/2+WT));
+                        //     break;
+                        case BRCD:
+                            g2.draw(new Arc2D.Float(centX-sqSize, centY, sqSize, sqSize, 0, 90, Arc2D.OPEN));
+                            break;
+                        default: break;
                     }
                 }
             }
@@ -286,7 +410,7 @@ public class Maze {
         frame.setVisible(true);
         frame.setResizable(false);
         // DONT KNOW WHY I HAD TO ADD TO HEIGHT????
-        frame.setSize(sqSize*nCols, sqSize*nRows+sqSize/2);
+        frame.setSize(sqSize*nCols, sqSize*nRows+sqSize/2+WT);
         frame.setLocation(0, 0);
     }
 }
