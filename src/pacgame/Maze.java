@@ -316,9 +316,10 @@ public class Maze {
                             // so go to the next one
                             dotx = grid[row][col].pixelX-dotd/2;
                             doty = grid[row][col].pixelY-dotd/2;
-                            g.fillOval(dotx, doty, dotd, dotd);
+                            g.fillRect(dotx, doty, dotd, dotd);
                             continue;
                         } else if (grid[row][col].powerup) {
+                            // draw a powerup
                             dotx = grid[row][col].pixelX-sqSize/2;
                             doty = grid[row][col].pixelY-sqSize/2;
                             g.fillOval(dotx, doty, sqSize, sqSize);
