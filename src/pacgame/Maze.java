@@ -7,8 +7,8 @@ import java.util.Arrays;
 
 public class Maze {
     public static final int nCols = 28;         // number of columns
-    public static final int nRows = 13;         // number of rows
-    public static final int sqSize = 40;        // grid square size
+    public static final int nRows = 36;         // number of rows
+    public static final int sqSize = 25;        // grid square size
     public static final int dotd = sqSize/4;    // dot diameter
     public static final int WT = 3;             // wall thickness
     // array for what is in each square, row,col
@@ -112,6 +112,12 @@ public class Maze {
         // inner bottom right corner
         Square IBRCsq = new Square();
         IBRCsq.wall = WallType.IBRC;
+        // bottom end left
+        Square BELsq = new Square();
+        BELsq.wall = WallType.BEL;
+        // bottom end right
+        Square BERsq = new Square();
+        BERsq.wall = WallType.BER;
         // powerup
         Square POWERUPsq = new Square();
         POWERUPsq.powerup = true;
@@ -181,7 +187,6 @@ public class Maze {
         grid[5][25] = TRCsq;
         grid[5][26] = DOTsq;
         grid[5][27] = Rsq;
-
         // row 6
         grid[6][0] = Lsq;
         grid[6][1] = POWERUPsq;
@@ -258,12 +263,9 @@ public class Maze {
         grid[9][8] = TRCsq;
         grid[9][9] = DOTsq;
         grid[9][10] = TLCsq;
-        grid[9][11] = horizsq;
-        grid[9][12] = horizsq;
-        grid[9][13] = horizsq;
-        grid[9][14] = horizsq;
-        grid[9][15] = horizsq;
-        grid[9][16] = horizsq;
+        for (int i = 11; i < 17; i++){
+            grid[9][i] = horizsq;
+        }
         grid[9][17] = TRCsq;
         grid[9][18] = DOTsq;
         grid[9][19] = TLCsq;
@@ -306,39 +308,30 @@ public class Maze {
         grid[10][27] = Rsq;
         // row 11
         grid[11][0] = Lsq;
-        grid[11][1] = DOTsq;
-        grid[11][2] = DOTsq;
-        grid[11][3] = DOTsq;
-        grid[11][4] = DOTsq;
-        grid[11][5] = DOTsq;
-        grid[11][6] = DOTsq;
+        for (int i = 1; i < 7; i++){
+            grid[11][i] = DOTsq;
+        }
         grid[11][7] = vertsq;
         grid[11][8] = vertsq;
-        grid[11][9] = DOTsq;
-        grid[11][10] = DOTsq;
-        grid[11][11] = DOTsq;
-        grid[11][12] = DOTsq;
+        for (int i = 9; i < 13; i++){
+            grid[11][i] = DOTsq;
+        }
         grid[11][13] = vertsq;
         grid[11][14] = vertsq;
-        grid[11][15] = DOTsq;
-        grid[11][16] = DOTsq;
-        grid[11][17] = DOTsq;
-        grid[11][18] = DOTsq;
+        for (int i = 15; i < 19; i++){
+            grid[11][i] = DOTsq;
+        }
         grid[11][19] = vertsq;
         grid[11][20] = vertsq;
-        grid[11][21] = DOTsq;
-        grid[11][22] = DOTsq;
-        grid[11][23] = DOTsq;
-        grid[11][24] = DOTsq;
-        grid[11][25] = DOTsq;
-        grid[11][26] = DOTsq;
+        for (int i = 21; i < 27; i++){
+            grid[11][i] = DOTsq;
+        }
         grid[11][27] = Rsq;
         // row 12
         grid[12][0] = BLCUsq;
-        grid[12][1] = Bsq;
-        grid[12][2] = Bsq;
-        grid[12][3] = Bsq;
-        grid[12][4] = Bsq;
+        for (int i = 1; i < 5; i++){
+            grid[12][i] = Bsq;
+        }
         grid[12][5] = BRCDsq;
         grid[12][6] = DOTsq;
         grid[12][7] = vertsq;
@@ -357,11 +350,459 @@ public class Maze {
         grid[12][20] = vertsq;
         grid[12][21] = DOTsq;
         grid[12][22] = BLCDsq;
-        grid[12][23] = Bsq;
-        grid[12][24] = Bsq;
-        grid[12][25] = Bsq;
-        grid[12][26] = Bsq;
+        for (int i = 23; i < 27; i++){
+            grid[12][i] = Bsq;
+        }
         grid[12][27] = BRCUsq;
+        // row 13
+        for (int i = 0; i < 5; i++){
+            grid[13][i] = EMPTYsq;
+        }
+        grid[13][5] = Lsq;
+        grid[13][6] = DOTsq;
+        grid[13][7] = vertsq;
+        grid[13][8] = TLCsq;
+        grid[13][9] = horizsq;
+        grid[13][10] = horizsq;
+        grid[13][11] = BRCsq;
+        grid[13][12] = EMPTYsq;
+        grid[13][13] = BLCsq;
+        grid[13][14] = BRCsq;
+        grid[13][15] = EMPTYsq;
+        grid[13][16] = BLCsq;
+        grid[13][17] = horizsq;
+        grid[13][18] = horizsq;
+        grid[13][19] = TRCsq;
+        grid[13][20] = vertsq;
+        grid[13][21] = DOTsq;
+        grid[13][22] = Rsq;
+        for (int i = 23; i < 28; i++){
+            grid[13][i] = EMPTYsq;
+        }
+        // row 14
+        for (int i = 0; i < 5; i++){
+            grid[14][i] = EMPTYsq;
+        }
+        grid[14][5] = Lsq;
+        grid[14][6] = DOTsq;
+        grid[14][7] = vertsq;
+        grid[14][8] = vertsq;
+        for (int i = 9; i < 19; i++){
+            grid[14][i] = EMPTYsq;
+        }
+        grid[14][19] = vertsq;
+        grid[14][20] = vertsq;
+        grid[14][21] = DOTsq;
+        grid[14][22] = Rsq;
+        for (int i = 23; i < 28; i++){
+            grid[14][i] = EMPTYsq;
+        }
+        // row 15
+        for (int i = 0; i < 5; i++){
+            grid[15][i] = EMPTYsq;
+        }
+        grid[15][5] = Lsq;
+        grid[15][6] = DOTsq;
+        grid[15][7] = vertsq;
+        grid[15][8] = vertsq;
+        grid[15][9] = EMPTYsq;
+        grid[15][10] = ITLCsq;
+        grid[15][11] = Bsq;
+        grid[15][12] = BERsq;
+        grid[15][13] = DOORsq;
+        grid[15][14] = DOORsq;
+        grid[15][15] = BELsq;
+        grid[15][16] = Bsq;
+        grid[15][17] = ITRCsq;
+        grid[15][18] = EMPTYsq;
+        grid[15][19] = vertsq;
+        grid[15][20] = vertsq;
+        grid[15][21] = DOTsq;
+        grid[15][22] = Rsq;
+        for (int i = 23; i < 28; i++){
+            grid[15][i] = EMPTYsq;
+        }
+        // row 16
+        for (int i = 0; i < 5; i++){
+            grid[16][i] = Tsq;
+        }
+        grid[16][5] = TRCUsq;
+        grid[16][6] = DOTsq;
+        grid[16][7] = BLCsq;
+        grid[16][8] = BRCsq;
+        grid[16][9] = EMPTYsq;
+        grid[16][10] = Rsq;
+        for (int i = 11; i < 17; i++){
+            grid[16][i] = EMPTYsq;
+        }
+        grid[16][17] = Lsq;
+        grid[16][18] = EMPTYsq;
+        grid[16][19] = BLCsq;
+        grid[16][20] = BRCsq;
+        grid[16][21] = DOTsq;
+        grid[16][22] = TLCUsq;
+        for (int i = 23; i < 28; i++){
+            grid[16][i] = Tsq;
+        }
+        // row 17
+        for (int i = 0; i < 6; i++){
+            grid[17][i] = EMPTYsq;
+        }
+        grid[17][6] = DOTsq;
+        grid[17][7] = EMPTYsq;
+        grid[17][8] = EMPTYsq;
+        grid[17][9] = EMPTYsq;
+        grid[17][10] = Rsq;
+        for (int i = 11; i < 17; i++){
+            grid[17][i] = EMPTYsq;
+        }
+        grid[17][17] = Lsq;
+        grid[17][18] = EMPTYsq;
+        grid[17][19] = EMPTYsq;
+        grid[17][20] = EMPTYsq;
+        grid[17][21] = DOTsq;
+        for (int i = 22; i < 28; i++){
+            grid[17][i] = EMPTYsq;
+        }
+        // row 18
+        for (int i = 0; i < 5; i++){
+            grid[18][i] = Bsq;
+        }
+        grid[18][5] = BRCDsq;
+        grid[18][6] = DOTsq;
+        grid[18][7] = TLCsq;
+        grid[18][8] = TRCsq;
+        grid[18][9] = EMPTYsq;
+        grid[18][10] = Rsq;
+        for (int i = 11; i < 17; i++){
+            grid[18][i] = EMPTYsq;
+        }
+        grid[18][17] = Lsq;
+        grid[18][18] = EMPTYsq;
+        grid[18][19] = TLCsq;
+        grid[18][20] = TRCsq;
+        grid[18][21] = DOTsq;
+        grid[18][22] = BLCDsq;
+        for (int i = 23; i < 28; i++){
+            grid[18][i] = Bsq;
+        }
+        // row 19
+        for (int i = 0; i < 5; i++){
+            grid[19][i] = EMPTYsq;
+        }
+        grid[19][5] = Lsq;
+        grid[19][6] = DOTsq;
+        grid[19][7] = vertsq;
+        grid[19][8] = vertsq;
+        grid[19][9] = EMPTYsq;
+        grid[19][10] = IBLCsq;
+        for (int i = 11; i < 17; i++){
+            grid[19][i] = Tsq;
+        }
+        grid[19][17] = IBRCsq;
+        grid[19][18] = EMPTYsq;
+        grid[19][19] = vertsq;
+        grid[19][20] = vertsq;
+        grid[19][21] = DOTsq;
+        grid[19][22] = Rsq;
+        for (int i = 23; i < 28; i++){
+            grid[19][i] = EMPTYsq;
+        }
+        // row 20
+        for (int i = 0; i < 5; i++){
+            grid[20][i] = EMPTYsq;
+        }
+        grid[20][5] = Lsq;
+        grid[20][6] = DOTsq;
+        grid[20][7] = vertsq;
+        grid[20][8] = vertsq;
+        for (int i = 9; i < 19; i++){
+            grid[20][i] = EMPTYsq;
+        }
+        grid[20][19] = vertsq;
+        grid[20][20] = vertsq;
+        grid[20][21] = DOTsq;
+        grid[20][22] = Rsq;
+        for (int i = 23; i < 28; i++){
+            grid[20][i] = EMPTYsq;
+        }
+        // row 21
+        for (int i = 0; i < 5; i++){
+            grid[21][i] = EMPTYsq;
+        }
+        grid[21][5] = Lsq;
+        grid[21][6] = DOTsq;
+        grid[21][7] = vertsq;
+        grid[21][8] = vertsq;
+        grid[21][9] = EMPTYsq;
+        grid[21][10] = TLCsq;
+        for (int i = 11; i < 17; i++){
+            grid[21][i] = horizsq;
+        }
+        grid[21][17] = TRCsq;
+        grid[21][18] = EMPTYsq;
+        grid[21][19] = vertsq;
+        grid[21][20] = vertsq;
+        grid[21][21] = DOTsq;
+        grid[21][22] = Rsq;
+        for (int i = 23; i < 28; i++){
+            grid[21][i] = EMPTYsq;
+        }
+        // row 22
+        grid[22][0] = TLCDsq;
+        for (int i = 1; i < 5; i++){
+            grid[22][i] = Tsq;
+        }
+        grid[22][5] = TRCUsq;
+        grid[22][6] = DOTsq;
+        grid[22][7] = BLCsq;
+        grid[22][8] = BRCsq;
+        grid[22][9] = EMPTYsq;
+        grid[22][10] = BLCsq;
+        grid[22][11] = horizsq;
+        grid[22][12] = horizsq;
+        grid[22][13] = TRCsq;
+        grid[22][14] = TLCsq;
+        grid[22][15] = horizsq;
+        grid[22][16] = horizsq;
+        grid[22][17] = BRCsq;
+        grid[22][18] = EMPTYsq;
+        grid[22][19] = BLCsq;
+        grid[22][20] = BRCsq;
+        grid[22][21] = DOTsq;
+        grid[22][22] = TLCUsq;
+        for (int i = 23; i < 27; i++){
+            grid[22][i] = Tsq;
+        }
+        grid[22][27] = TRCDsq;
+        // row 23
+        grid[23][0] = Lsq;
+        for (int i = 1; i < 13; i++){
+            grid[23][i] = DOTsq;
+        }
+        grid[23][13] = vertsq;
+        grid[23][14] = vertsq;
+        for (int i = 15; i < 27; i++){
+            grid[23][i] = DOTsq;
+        }
+        grid[23][27] = Rsq;
+        // row 24
+        grid[24][0] = Lsq;
+        grid[24][1] = DOTsq;
+        grid[24][2] = TLCsq;
+        grid[24][3] = horizsq;
+        grid[24][4] = horizsq;
+        grid[24][5] = TRCsq;
+        grid[24][6] = DOTsq;
+        grid[24][7] = TLCsq;
+        grid[24][8] = horizsq;
+        grid[24][9] = horizsq;
+        grid[24][10] = horizsq;
+        grid[24][11] = TRCsq;
+        grid[24][12] = DOTsq;
+        grid[24][13] = vertsq;
+        grid[24][14] = vertsq;
+        grid[24][15] = DOTsq;
+        grid[24][16] = TLCsq;
+        grid[24][17] = horizsq;
+        grid[24][18] = horizsq;
+        grid[24][19] = horizsq;
+        grid[24][20] = TRCsq;
+        grid[24][21] = DOTsq;
+        grid[24][22] = TLCsq;
+        grid[24][23] = horizsq;
+        grid[24][24] = horizsq;
+        grid[24][25] = TRCsq;
+        grid[24][26] = DOTsq;
+        grid[24][27] = Rsq;
+        // row 25
+        grid[25][0] = Lsq;
+        grid[25][1] = DOTsq;
+        grid[25][2] = BLCsq;
+        grid[25][3] = horizsq;
+        grid[25][4] = TRCsq;
+        grid[25][5] = vertsq;
+        grid[25][6] = DOTsq;
+        grid[25][7] = BLCsq;
+        grid[25][8] = horizsq;
+        grid[25][9] = horizsq;
+        grid[25][10] = horizsq;
+        grid[25][11] = BRCsq;
+        grid[25][12] = DOTsq;
+        grid[25][13] = BLCsq;
+        grid[25][14] = BRCsq;
+        grid[25][15] = DOTsq;
+        grid[25][16] = BLCsq;
+        grid[25][17] = horizsq;
+        grid[25][18] = horizsq;
+        grid[25][19] = horizsq;
+        grid[25][20] = BRCsq;
+        grid[25][21] = DOTsq;
+        grid[25][22] = vertsq;
+        grid[25][23] = TLCsq;
+        grid[25][24] = horizsq;
+        grid[25][25] = BRCsq;
+        grid[25][26] = DOTsq;
+        grid[25][27] = Rsq;
+        // row 26
+        grid[26][0] = Lsq;
+        grid[26][1] = POWERUPsq;
+        grid[26][2] = DOTsq;
+        grid[26][3] = DOTsq;
+        grid[26][4] = vertsq;
+        grid[26][5] = vertsq;
+        for (int i = 6; i < 13; i++){
+            grid[26][i] = DOTsq;
+        }
+        grid[26][13] = EMPTYsq;
+        grid[26][14] = EMPTYsq;
+        for (int i = 15; i < 22; i++){
+            grid[26][i] = DOTsq;
+        }
+        grid[26][22] = vertsq;
+        grid[26][23] = vertsq;
+        grid[26][24] = DOTsq;
+        grid[26][25] = DOTsq;
+        grid[26][26] = POWERUPsq;
+        grid[26][27] = Rsq;
+        // row 27
+        grid[27][0] = LTTsq;
+        grid[27][1] = horizsq;
+        grid[27][2] = TRCsq;
+        grid[27][3] = DOTsq;
+        grid[27][4] = vertsq;
+        grid[27][5] = vertsq;
+        grid[27][6] = DOTsq;
+        grid[27][7] = TLCsq;
+        grid[27][8] = TRCsq;
+        grid[27][9] = DOTsq;
+        grid[27][10] = TLCsq;
+        for (int i = 11; i < 17; i++){
+            grid[27][i] = horizsq;
+        }
+        grid[27][17] = TRCsq;
+        grid[27][18] = DOTsq;
+        grid[27][19] = TLCsq;
+        grid[27][20] = TRCsq;
+        grid[27][21] = DOTsq;
+        grid[27][22] = vertsq;
+        grid[27][23] = vertsq;
+        grid[27][24] = DOTsq;
+        grid[27][25] = TLCsq;
+        grid[27][26] = horizsq;
+        grid[27][27] = RTTsq;
+        // row 28
+        grid[28][0] = LTBsq;
+        grid[28][1] = horizsq;
+        grid[28][2] = BRCsq;
+        grid[28][3] = DOTsq;
+        grid[28][4] = BLCsq;
+        grid[28][5] = BRCsq;
+        grid[28][6] = DOTsq;
+        grid[28][7] = vertsq;
+        grid[28][8] = vertsq;
+        grid[28][9] = DOTsq;
+        grid[28][10] = BLCsq;
+        grid[28][11] = horizsq;
+        grid[28][12] = horizsq;
+        grid[28][13] = TRCsq;
+        grid[28][14] = TLCsq;
+        grid[28][15] = horizsq;
+        grid[28][16] = horizsq;
+        grid[28][17] = BRCsq;
+        grid[28][18] = DOTsq;
+        grid[28][19] = vertsq;
+        grid[28][20] = vertsq;
+        grid[28][21] = DOTsq;
+        grid[28][22] = BLCsq;
+        grid[28][23] = BRCsq;
+        grid[28][24] = DOTsq;
+        grid[28][25] = BLCsq;
+        grid[28][26] = horizsq;
+        grid[28][27] = RTBsq;
+        // row 29
+        grid[29][0] = Lsq;
+        for (int i = 1; i < 7; i++){
+            grid[29][i] = DOTsq;
+        }
+        grid[29][7] = vertsq;
+        grid[29][8] = vertsq;
+        for (int i = 9; i < 13; i++){
+            grid[29][i] = DOTsq;
+        }
+        grid[29][13] = vertsq;
+        grid[29][14] = vertsq;
+        for (int i = 15; i < 19; i++){
+            grid[29][i] = DOTsq;
+        }
+        grid[29][19] = vertsq;
+        grid[29][20] = vertsq;
+        for (int i = 21; i < 27; i++){
+            grid[29][i] = DOTsq;
+        }
+        grid[29][27] = Rsq;
+        // row 30
+        grid[30][0] = Lsq;
+        grid[30][1] = DOTsq;
+        grid[30][2] = TLCsq;
+        for (int i = 3; i < 7; i++){
+            grid[30][i] = horizsq;
+        }
+        grid[30][7] = BRCsq;
+        grid[30][8] = BLCsq;
+        grid[30][9] = horizsq;
+        grid[30][10] = horizsq;
+        grid[30][11] = TRCsq;
+        grid[30][12] = DOTsq;
+        grid[30][13] = vertsq;
+        grid[30][14] = vertsq;
+        grid[30][15] = DOTsq;
+        grid[30][16] = TLCsq;
+        grid[30][17] = horizsq;
+        grid[30][18] = horizsq;
+        grid[30][19] = BRCsq;
+        grid[30][20] = BLCsq;
+        for (int i = 21; i < 25; i++){
+            grid[30][i] = horizsq;
+        }
+        grid[30][25] = TRCsq;
+        grid[30][26] = DOTsq;
+        grid[30][27] = Rsq;
+        // row 31
+        grid[31][0] = Lsq;
+        grid[31][1] = DOTsq;
+        grid[31][2] = BLCsq;
+        for (int i = 3; i < 11; i++){
+            grid[31][i] = horizsq;
+        }
+        grid[31][11] = BRCsq;
+        grid[31][12] = DOTsq;
+        grid[31][13] = BLCsq;
+        grid[31][14] = BRCsq;
+        grid[31][15] = DOTsq;
+        grid[31][16] = BLCsq;
+        for (int i = 17; i < 25; i++){
+            grid[31][i] = horizsq;
+        }
+        grid[31][25] = BRCsq;
+        grid[31][26] = DOTsq;
+        grid[31][27] = Rsq;
+        // row 32
+        grid[32][0] = Lsq;
+        for (int i = 1; i < 27; i++){
+            grid[32][i] = DOTsq;
+        }
+        grid[32][27] = Rsq;
+        // row 33
+        grid[33][0] = BLCUsq;
+        for (int i = 1; i < 27; i++){
+            grid[33][i] = Bsq;
+        }
+        grid[33][27] = BRCUsq;
+        // row 34
+        Arrays.fill(grid[34], EMPTYsq);
+        // row 35
+        Arrays.fill(grid[35], EMPTYsq);
     }
     // We need to define the Square class.  It's important that it's public
     // because we will probably need other classes to use it.
@@ -392,7 +833,7 @@ public class Maze {
         NONE, HORIZ, VERT, TLC, TRC, BLC, BRC,
         T, TTL, TTR, L, LTT, LTB, R, RTT, RTB, B,
         TRCD, TRCU, TLCD, TLCU, BRCU, BRCD, BLCU, BLCD,
-        DOOR, ITLC, ITRC, IBLC, IBRC
+        DOOR, ITLC, ITRC, IBLC, IBRC, BEL, BER
     }
     // This is the DrawPanel analog we're using for this maze.  As you draw
     // things, you may find that you need more constants.  One such constant
@@ -482,13 +923,30 @@ public class Maze {
                             g2.draw(new Arc2D.Float(centX-sqSize, centY, sqSize, sqSize, 0, 90, Arc2D.OPEN));
                             g2.draw(new Arc2D.Float(centX-3*sqSize/2+WT, centY-sqSize/2+WT, 2*sqSize-2*WT, 2*sqSize-2*WT, 0, 90, Arc2D.OPEN));
                             break;
-                        case BLCU:
+                        case TRCU: // DONE RIGHT!
+                            g2.draw(new Arc2D.Float(centX-sqSize, centY-sqSize, sqSize, sqSize, 270, 90, Arc2D.OPEN));
+                            g2.draw(new Arc2D.Float(centX-sqSize/2-WT, centY-sqSize/2-WT, 2*WT, 2*WT, 270, 90, Arc2D.OPEN));
+                            break;
+                        case TLCU: // DONE RIGHT!
+                            g2.draw(new Arc2D.Float(centX, centY-sqSize, sqSize, sqSize, 180, 90, Arc2D.OPEN));
+                            g2.draw(new Arc2D.Float(centX+sqSize/2-WT, centY-sqSize/2-WT, 2*WT, 2*WT, 180, 90, Arc2D.OPEN));
+                            break;
+                        case BLCU: // seems right
                             g2.draw(new Arc2D.Float(centX, centY-sqSize, sqSize, sqSize, 180, 90, Arc2D.OPEN));
                             g2.draw(new Arc2D.Float(centX-sqSize/2+WT, centY-3*sqSize/2+WT, 2*sqSize-2*WT, 2*sqSize-2*WT, 180, 90, Arc2D.OPEN));
                             break;
                         case BRCU:
                             g2.draw(new Arc2D.Float(centX-sqSize, centY-sqSize, sqSize, sqSize, 270, 90, Arc2D.OPEN));
                             g2.draw(new Arc2D.Float(centX-3*sqSize/2+WT, centY-3*sqSize/2+WT, 2*sqSize-2*WT, 2*sqSize-2*WT, 270, 90, Arc2D.OPEN));
+                            break;
+                        case BRCD: // DONE RIGHT!
+                            g2.draw(new Arc2D.Float(centX-sqSize, centY, sqSize, sqSize, 0, 90, Arc2D.OPEN));
+                            g2.draw(new Arc2D.Float(centX-sqSize/2-WT, centY+sqSize/2-WT, 2*WT, 2*WT, 0, 90, Arc2D.OPEN));
+                            break;
+                        case BLCD: // DONE RIGHT!
+                            g2.draw(new Arc2D.Float(centX, centY, sqSize, sqSize, 90, 90, Arc2D.OPEN));
+                            g2.draw(new Arc2D.Float(centX+sqSize/2-WT, centY+sqSize/2-WT, 2*WT, 2*WT, 90, 90, Arc2D.OPEN));
+                            // g2.draw(new Line2D.Float(centX+sqSize/2, centY+sqSize/2-WT, centX+sqSize/2-WT/2, centY+sqSize/2-WT));
                             break;
                         case TTL:
                             g2.draw(new Arc2D.Float(centX-sqSize, centY, sqSize, sqSize, 0, 90, Arc2D.OPEN));
@@ -498,12 +956,61 @@ public class Maze {
                             g2.draw(new Arc2D.Float(centX, centY, sqSize, sqSize, 90, 90, Arc2D.OPEN));
                             g2.draw(new Line2D.Float(centX-sqSize/2, centY-sqSize/2+WT, centX+sqSize/2, centY-sqSize/2+WT));
                             break;
-                        case BRCD:
-                            g2.draw(new Arc2D.Float(centX-sqSize, centY, sqSize, sqSize, 0, 90, Arc2D.OPEN));
+                        case LTT:
+                            g2.draw(new Arc2D.Float(centX, centY-sqSize, sqSize, sqSize, 180, 90, Arc2D.OPEN));
+                            g2.draw(new Line2D.Float(centX-sqSize/2+WT, centY-sqSize/2, centX-sqSize/2+WT, centY+sqSize/2));
                             break;
-                        case BLCD:
+                        case LTB:
                             g2.draw(new Arc2D.Float(centX, centY, sqSize, sqSize, 90, 90, Arc2D.OPEN));
+                            g2.draw(new Line2D.Float(centX-sqSize/2+WT, centY-sqSize/2, centX-sqSize/2+WT, centY+sqSize/2));
                             break;
+                        case RTT:
+                            g2.draw(new Arc2D.Float(centX-sqSize, centY-sqSize, sqSize, sqSize, 270, 90, Arc2D.OPEN));
+                            g2.draw(new Line2D.Float(centX+sqSize/2-WT, centY-sqSize/2, centX+sqSize/2-WT, centY+sqSize/2));
+                            break;
+                        case RTB:
+                            g2.draw(new Arc2D.Float(centX-sqSize, centY, sqSize, sqSize, 0, 90, Arc2D.OPEN));
+                            g2.draw(new Line2D.Float(centX+sqSize/2-WT, centY-sqSize/2, centX+sqSize/2-WT, centY+sqSize/2));
+                            break;
+                        case ITLC:
+                            g2.draw(new Line2D.Float(centX, centY, centX+sqSize/2, centY));
+                            g2.draw(new Line2D.Float(centX, centY, centX, centY+sqSize/2));
+                            g2.draw(new Line2D.Float(centX+sqSize/2-WT, centY+sqSize/2-WT, centX+sqSize/2, centY+sqSize/2-WT));
+                            g2.draw(new Line2D.Float(centX+sqSize/2-WT, centY+sqSize/2-WT, centX+sqSize/2-WT, centY+sqSize/2));
+                            break;
+                        case ITRC:
+                            g2.draw(new Line2D.Float(centX, centY, centX-sqSize/2, centY));
+                            g2.draw(new Line2D.Float(centX, centY, centX, centY+sqSize/2));
+                            g2.draw(new Line2D.Float(centX-sqSize/2+WT, centY+sqSize/2-WT, centX-sqSize/2, centY+sqSize/2-WT));
+                            g2.draw(new Line2D.Float(centX-sqSize/2+WT, centY+sqSize/2-WT, centX-sqSize/2+WT, centY+sqSize/2));
+                            break;
+                        case IBLC:
+                            g2.draw(new Line2D.Float(centX, centY, centX+sqSize/2, centY));
+                            g2.draw(new Line2D.Float(centX, centY, centX, centY-sqSize/2));
+                            g2.draw(new Line2D.Float(centX+sqSize/2-WT, centY-sqSize/2+WT, centX+sqSize/2, centY-sqSize/2+WT));
+                            g2.draw(new Line2D.Float(centX+sqSize/2-WT, centY-sqSize/2+WT, centX+sqSize/2-WT, centY-sqSize/2));
+                            break;
+                        case IBRC:
+                            g2.draw(new Line2D.Float(centX, centY, centX-sqSize/2, centY));
+                            g2.draw(new Line2D.Float(centX, centY, centX, centY-sqSize/2));
+                            g2.draw(new Line2D.Float(centX-sqSize/2+WT, centY-sqSize/2+WT, centX-sqSize/2, centY-sqSize/2+WT));
+                            g2.draw(new Line2D.Float(centX-sqSize/2+WT, centY-sqSize/2+WT, centX-sqSize/2+WT, centY-sqSize/2));
+                            break;
+                        case DOOR:
+                            g.setColor(Color.PINK);
+                            g.fillRect(centX-sqSize/2, centY+2*WT/3, sqSize, sqSize/2-2*WT);
+                            break;
+                        case BER:
+                            g2.draw(new Line2D.Float(centX-sqSize/2, centY+sqSize/2-WT, centX+sqSize/2, centY+sqSize/2-WT));
+                            g2.draw(new Line2D.Float(centX-sqSize/2, centY, centX+sqSize/2, centY));
+                            g2.draw(new Line2D.Float(centX+sqSize/2, centY, centX+sqSize/2, centY+sqSize/2-WT));
+                            break;
+                        case BEL:
+                            g2.draw(new Line2D.Float(centX-sqSize/2, centY+sqSize/2-WT, centX+sqSize/2, centY+sqSize/2-WT));
+                            g2.draw(new Line2D.Float(centX-sqSize/2, centY, centX+sqSize/2, centY));
+                            g2.draw(new Line2D.Float(centX-sqSize/2, centY, centX-sqSize/2, centY+sqSize/2-WT));
+                            break;
+
                         default: break;
                     }
                 }
