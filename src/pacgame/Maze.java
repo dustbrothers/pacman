@@ -6,7 +6,7 @@ import java.awt.geom.Arc2D;
 import java.util.Arrays;
 
 public class Maze {
-    public static final int nCols = 14;         // number of columns
+    public static final int nCols = 28;         // number of columns
     public static final int nRows = 13;         // number of rows
     public static final int sqSize = 40;        // grid square size
     public static final int dotd = sqSize/4;    // dot diameter
@@ -136,17 +136,22 @@ public class Maze {
             grid[3][i] = Tsq;
         }
         grid[3][13] = TTLsq;
-        // grid[3][14] = TTRsq;
-        // for (int i = 15; i < 27; i++){
-        //     grid[3][i] = Tsq;
-        // }
-        // grid[3][27] = TRCDsq;
+        grid[3][14] = TTRsq;
+        for (int i = 15; i < 27; i++){
+            grid[3][i] = Tsq;
+        }
+        grid[3][27] = TRCDsq;
         // row 4
         grid[4][0] = Lsq;
         for (int i = 1; i < 13; i++){
             grid[4][i] = DOTsq;
         }
         grid[4][13] = vertsq;
+        grid[4][14] = vertsq;
+        for (int i = 15; i < 27; i++){
+            grid[4][i] = DOTsq;
+        }
+        grid[4][27] = Rsq;
         // row 5
         grid[5][0] = Lsq;
         grid[5][1] = DOTsq;
@@ -162,6 +167,21 @@ public class Maze {
         grid[5][11] = TRCsq;
         grid[5][12] = DOTsq;
         grid[5][13] = vertsq;
+        grid[5][14] = vertsq;
+        grid[5][15] = DOTsq;
+        grid[5][16] = TLCsq;
+        grid[5][17] = horizsq;
+        grid[5][18] = horizsq;
+        grid[5][19] = horizsq;
+        grid[5][20] = TRCsq;
+        grid[5][21] = DOTsq;
+        grid[5][22] = TLCsq;
+        grid[5][23] = horizsq;
+        grid[5][24] = horizsq;
+        grid[5][25] = TRCsq;
+        grid[5][26] = DOTsq;
+        grid[5][27] = Rsq;
+
         // row 6
         grid[6][0] = Lsq;
         grid[6][1] = POWERUPsq;
@@ -177,6 +197,20 @@ public class Maze {
         grid[6][11] = vertsq;
         grid[6][12] = DOTsq;
         grid[6][13] = vertsq;
+        grid[6][14] = vertsq;
+        grid[6][15] = DOTsq;
+        grid[6][16] = vertsq;
+        grid[6][17] = EMPTYsq;
+        grid[6][18] = EMPTYsq;
+        grid[6][19] = EMPTYsq;
+        grid[6][20] = vertsq;
+        grid[6][21] = DOTsq;
+        grid[6][22] = vertsq;
+        grid[6][23] = EMPTYsq;
+        grid[6][24] = EMPTYsq;
+        grid[6][25] = vertsq;
+        grid[6][26] = POWERUPsq;
+        grid[6][27] = Rsq;
         // row 7
         grid[7][0] = Lsq;
         grid[7][1] = DOTsq;
@@ -192,11 +226,26 @@ public class Maze {
         grid[7][11] = BRCsq;
         grid[7][12] = DOTsq;
         grid[7][13] = BLCsq;
+        grid[7][14] = BRCsq;
+        grid[7][15] = DOTsq;
+        grid[7][16] = BLCsq;
+        grid[7][17] = horizsq;
+        grid[7][18] = horizsq;
+        grid[7][19] = horizsq;
+        grid[7][20] = BRCsq;
+        grid[7][21] = DOTsq;
+        grid[7][22] = BLCsq;
+        grid[7][23] = horizsq;
+        grid[7][24] = horizsq;
+        grid[7][25] = BRCsq;
+        grid[7][26] = DOTsq;
+        grid[7][27] = Rsq;
         // row 8
         grid[8][0] = Lsq;
-        for (int i = 1; i < 14; i++){
+        for (int i = 1; i < 27; i++){
             grid[8][i] = DOTsq;
         }
+        grid[8][27] = Rsq;
         // row 9
         grid[9][0] = Lsq;
         grid[9][1] = DOTsq;
@@ -212,6 +261,20 @@ public class Maze {
         grid[9][11] = horizsq;
         grid[9][12] = horizsq;
         grid[9][13] = horizsq;
+        grid[9][14] = horizsq;
+        grid[9][15] = horizsq;
+        grid[9][16] = horizsq;
+        grid[9][17] = TRCsq;
+        grid[9][18] = DOTsq;
+        grid[9][19] = TLCsq;
+        grid[9][20] = TRCsq;
+        grid[9][21] = DOTsq;
+        grid[9][22] = TLCsq;
+        grid[9][23] = horizsq;
+        grid[9][24] = horizsq;
+        grid[9][25] = TRCsq;
+        grid[9][26] = DOTsq;
+        grid[9][27] = Rsq;
         // row 10
         grid[10][0] = Lsq;
         grid[10][1] = DOTsq;
@@ -227,6 +290,20 @@ public class Maze {
         grid[10][11] = horizsq;
         grid[10][12] = horizsq;
         grid[10][13] = TRCsq;
+        grid[10][14] = TLCsq;
+        grid[10][15] = horizsq;
+        grid[10][16] = horizsq;
+        grid[10][17] = BRCsq;
+        grid[10][18] = DOTsq;
+        grid[10][19] = vertsq;
+        grid[10][20] = vertsq;
+        grid[10][21] = DOTsq;
+        grid[10][22] = BLCsq;
+        grid[10][23] = horizsq;
+        grid[10][24] = horizsq;
+        grid[10][25] = BRCsq;
+        grid[10][26] = DOTsq;
+        grid[10][27] = Rsq;
         // row 11
         grid[11][0] = Lsq;
         grid[11][1] = DOTsq;
@@ -242,6 +319,20 @@ public class Maze {
         grid[11][11] = DOTsq;
         grid[11][12] = DOTsq;
         grid[11][13] = vertsq;
+        grid[11][14] = vertsq;
+        grid[11][15] = DOTsq;
+        grid[11][16] = DOTsq;
+        grid[11][17] = DOTsq;
+        grid[11][18] = DOTsq;
+        grid[11][19] = vertsq;
+        grid[11][20] = vertsq;
+        grid[11][21] = DOTsq;
+        grid[11][22] = DOTsq;
+        grid[11][23] = DOTsq;
+        grid[11][24] = DOTsq;
+        grid[11][25] = DOTsq;
+        grid[11][26] = DOTsq;
+        grid[11][27] = Rsq;
         // row 12
         grid[12][0] = BLCUsq;
         grid[12][1] = Bsq;
@@ -257,6 +348,20 @@ public class Maze {
         grid[12][11] = TRCsq;
         grid[12][12] = EMPTYsq;
         grid[12][13] = vertsq;
+        grid[12][14] = vertsq;
+        grid[12][15] = EMPTYsq;
+        grid[12][16] = TLCsq;
+        grid[12][17] = horizsq;
+        grid[12][18] = horizsq;
+        grid[12][19] = BRCsq;
+        grid[12][20] = vertsq;
+        grid[12][21] = DOTsq;
+        grid[12][22] = BLCDsq;
+        grid[12][23] = Bsq;
+        grid[12][24] = Bsq;
+        grid[12][25] = Bsq;
+        grid[12][26] = Bsq;
+        grid[12][27] = BRCUsq;
     }
     // We need to define the Square class.  It's important that it's public
     // because we will probably need other classes to use it.
@@ -299,7 +404,7 @@ public class Maze {
             // accordingly.  We nest two for loops because we are iterating
             // in two dimensions of our 2D grid array.
             Graphics2D g2 = (Graphics2D) g;
-            g2.setStroke(new BasicStroke(3));
+            g2.setStroke(new BasicStroke(WT));
             int dotx;
             int doty;
             int centX;
@@ -373,24 +478,31 @@ public class Maze {
                             g2.draw(new Arc2D.Float(centX, centY, sqSize, sqSize, 90, 90, Arc2D.OPEN));
                             g2.draw(new Arc2D.Float(centX-sqSize/2+WT, centY-sqSize/2+WT, 2*sqSize-2*WT, 2*sqSize-2*WT, 90, 90, Arc2D.OPEN));
                             break;
-                        // case TRCD:
-                        //     g2.draw(new Arc2D.Float(centX-sqSize, centY, sqSize, sqSize, 0, 90, Arc2D.OPEN));
-                        //     g2.draw(new Arc2D.Float(centX-sqSize+WT, centY-sqSize/2+WT, 2*sqSize-2*WT, 2*sqSize-2*WT, 0, 90, Arc2D.OPEN));
-                        //     break;
+                        case TRCD:
+                            g2.draw(new Arc2D.Float(centX-sqSize, centY, sqSize, sqSize, 0, 90, Arc2D.OPEN));
+                            g2.draw(new Arc2D.Float(centX-3*sqSize/2+WT, centY-sqSize/2+WT, 2*sqSize-2*WT, 2*sqSize-2*WT, 0, 90, Arc2D.OPEN));
+                            break;
                         case BLCU:
                             g2.draw(new Arc2D.Float(centX, centY-sqSize, sqSize, sqSize, 180, 90, Arc2D.OPEN));
                             g2.draw(new Arc2D.Float(centX-sqSize/2+WT, centY-3*sqSize/2+WT, 2*sqSize-2*WT, 2*sqSize-2*WT, 180, 90, Arc2D.OPEN));
+                            break;
+                        case BRCU:
+                            g2.draw(new Arc2D.Float(centX-sqSize, centY-sqSize, sqSize, sqSize, 270, 90, Arc2D.OPEN));
+                            g2.draw(new Arc2D.Float(centX-3*sqSize/2+WT, centY-3*sqSize/2+WT, 2*sqSize-2*WT, 2*sqSize-2*WT, 270, 90, Arc2D.OPEN));
                             break;
                         case TTL:
                             g2.draw(new Arc2D.Float(centX-sqSize, centY, sqSize, sqSize, 0, 90, Arc2D.OPEN));
                             g2.draw(new Line2D.Float(centX-sqSize/2, centY-sqSize/2+WT, centX+sqSize/2, centY-sqSize/2+WT));
                             break;
-                        // case TTR:
-                        //     g2.draw(new Arc2D.Float(centX, centY, sqSize, sqSize, 90, 90, Arc2D.OPEN));
-                        //     g2.draw(new Line2D.Float(centX-sqSize/2, centY-sqSize/2+WT, centX+sqSize/2, centY-sqSize/2+WT));
-                        //     break;
+                        case TTR:
+                            g2.draw(new Arc2D.Float(centX, centY, sqSize, sqSize, 90, 90, Arc2D.OPEN));
+                            g2.draw(new Line2D.Float(centX-sqSize/2, centY-sqSize/2+WT, centX+sqSize/2, centY-sqSize/2+WT));
+                            break;
                         case BRCD:
                             g2.draw(new Arc2D.Float(centX-sqSize, centY, sqSize, sqSize, 0, 90, Arc2D.OPEN));
+                            break;
+                        case BLCD:
+                            g2.draw(new Arc2D.Float(centX, centY, sqSize, sqSize, 90, 90, Arc2D.OPEN));
                             break;
                         default: break;
                     }
